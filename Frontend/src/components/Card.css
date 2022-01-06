@@ -1,0 +1,13 @@
+.sections {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0.5rem;
+  border-radius: 20px;
+  background: burlywood;
+}
+
+.selected {
+  background: green;
+}
