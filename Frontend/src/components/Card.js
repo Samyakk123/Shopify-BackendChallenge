@@ -25,8 +25,8 @@ function Card(props) {
     }, [props.selector]);
 
     return (
-        <div className={style} onClick={() => {props.selected(props.index)}}>
-            <p style={{padding: "10px"}}>{props.info._id}</p>
+        <div style={{padding: "10px"}} className={style} onClick={() => {props.selected(props.index)}}>
+            <p>{props.info._id}</p>
             <p>{props.info.name}</p>
             <p>{props.info.price}</p>
             <p>{props.info.description}</p>

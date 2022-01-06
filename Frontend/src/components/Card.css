@@ -9,5 +9,11 @@
 }
 
 .selected {
-  background: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: rgb(149, 107, 52);
+  margin: 0.5rem;
+  border-radius: 20px;
 }
