@@ -90,15 +90,14 @@ function Main() {
         })
       }
       setModified(!modified)
-      console.log("I AM THE RESPONSE: ", response)
       e.preventDefault();
 
       // e.preventDefault();
     }
 
 
-    useEffect(() => {
-      axios.get("http://localhost:5000/api/inventory/").then((res) => {
+     useEffect(async () => {
+      await axios.get("http://localhost:5000/api/inventory/").then((res) => {
         setDisplay(res.data)
       });
     }, [modified]);
@@ -115,15 +114,13 @@ function Main() {
 
     async function filterHandler(e) {
 
-      console.log("BEFORE EVERYTHING: ", filter.replaceAll(" ", "").split(","))
       const additionalString = filter.replaceAll(" ", "").split(",")
-      for (const x of additionalString){
-        var query = "/" + x
+      var query='';
+      for (var i=0; i < additionalString.length; i++){
+        query = i==additionalString.length-1 ? query + additionalString[i] : query + additionalString[i] + "&" 
       }
-      const response = await axios.get("http://localhost:5000/api/inventory/filter" + query);
-      console.log("OVER HERE: ", "http://localhost:5000/api/inventory/filter" + query)
+      const response = await axios.get("http://localhost:5000/api/inventory/filter/" + query);
       setFilteredDisplay(response.data)
-      console.log(response.data)
       e.preventDefault();
     }
 
@@ -131,7 +128,7 @@ function Main() {
 
     return (
       <div className="box">
-        <div>BIG TITLE HERE</div>
+        <div style={{color: "white", fontSize: "5rem", fontFamily: "font-family: Verdana, sans-serif"}}>INVENTORY MANAGEMENT SYSTEM</div>
         <div className="holder">
           {display.map((ele, index) => {
             return <Card selected={() => setSelected(index)} info={ele} index={index} selector={selected==index}></Card>
@@ -139,9 +136,9 @@ function Main() {
         </div>
         
         <div style={{display: "flex", width: "100%", justifyContent: "space-evenly", flexDirection: "row", alignItems:"center", paddingTop: "20px"}}>
-          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={() => {setEdit(true);openModal(true);}}>Edit item</Button>
+          <Button style={{borderRadius: 35, backgroundColor: selected==-1 ? "rgb(181, 181, 177)" : "rgb(140, 33, 25)" , padding: "18px 36px", fontSize: "18px", color: selected==-1 ? "rgb(79, 79, 77)" : "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={() => {setEdit(true);openModal(true);}}>Edit item</Button>
           <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" onClick={() => {setEdit(false);openModal(false);}}>Create new item</Button>
-          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={deleteHandler}>Delete item</Button>
+          <Button style={{borderRadius: 35, backgroundColor: selected==-1 ? "rgb(181, 181, 177)" : "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: selected==-1 ? "rgb(79, 79, 77)" : "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={deleteHandler}>Delete item</Button>
           <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" onClick={() => setModal2(true)}>Filter by tag</Button>
         </div>
         <Modal isOpen={modal} onRequestClose={closeModal} style={customStyles} contentLabel='Something'>

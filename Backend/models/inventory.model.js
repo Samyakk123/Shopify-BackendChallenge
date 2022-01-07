@@ -35,11 +35,11 @@ const inventorySchema = new Schema({
   quantity: {
     type: Number,
     required: true,
-    min: [1, 'Quantity cannot be below 1!'],
+    min: [1, 'item quantity must be greater than 0! '],
   },
   brand: {
     type: String,
-    required: 'Brand type must be provided!',
+    required: true,
   },
   tags: {
     type: [String],

@@ -4,15 +4,6 @@ import axios from "axios";
 import './Card.css'
 function Card(props) {
     const [style, setStyle] = useState("sections")
-
-    // const [display, setDisplay] = useState([])
-
-    // useEffect(() => {
-    //   axios.get("http://localhost:5000/api/inventory/").then((res) => {
-    //     console.log("OVER HERE ", res.data)
-    //     setDisplay(res.data)
-    //   });
-    // }, []);
   
     useEffect(() => {
         if(props.selector){
