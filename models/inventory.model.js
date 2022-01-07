@@ -4,13 +4,15 @@ const { Schema, model } = mongoose;
 /**
  * Schema for Inventory
  *
- * @property {String}       _id             Inventory id
- * @property {String}       name            Name of inventory
- * @property {Number}       price           Price of each inventory
- * @property {String}       description     Inventory description
- * @property {Quantity}     quantity        number of same inventory items
- * @property {String}       brand           Inventory brand
- * @property {[String]}     tags            Inventory Tags
+ * @property {String}       _id             item id
+ * @property {String}       name            Name of item
+ * @property {Number}       price           Price of each item
+ * @property {String}       description     item description
+ * @property {Number}       quantity        number of items in storage
+ * @property {String}       brand           item brand
+ * @property {[String]}     tags            item Tags
+ * 
+ * The _id is the primary key for this collection
  */
 
 const inventorySchema = new Schema({

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import Card from './Card';
 import Modal from 'react-modal';
+import Button from '@material-ui/core/Button';
+
 
 function Main() {
     const [display, setDisplay] = useState([])
@@ -24,6 +26,8 @@ function Main() {
 
     const [filter, setFilter] = useState("")
 
+    
+
     const customStyles = {
       content: {
         top: '50%',
@@ -32,6 +36,7 @@ function Main() {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
+        backgroundColor: "black"
       },
     };
 
@@ -126,54 +131,57 @@ function Main() {
 
     return (
       <div className="box">
-
+        <div>BIG TITLE HERE</div>
         <div className="holder">
           {display.map((ele, index) => {
             return <Card selected={() => setSelected(index)} info={ele} index={index} selector={selected==index}></Card>
           })}
         </div>
         
-        <div style={{display: "flex", width: "100%", justifyContent: "space-evenly", flexDirection: "row", alignItems:"center"}}>
-          <button disabled={selected == -1 ? true : false} onClick={() => {setEdit(true);openModal(true);}}>Edit item</button>
-          <button onClick={() => {setEdit(false);openModal(false);}}>Create new item</button>
-          <button disabled={selected == -1 ? true : false} onClick={deleteHandler}>Delete item</button>
-          <button onClick={() => setModal2(true)}>Filter by tag</button>
+        <div style={{display: "flex", width: "100%", justifyContent: "space-evenly", flexDirection: "row", alignItems:"center", paddingTop: "20px"}}>
+          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={() => {setEdit(true);openModal(true);}}>Edit item</Button>
+          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" onClick={() => {setEdit(false);openModal(false);}}>Create new item</Button>
+          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" disabled={selected == -1 ? true : false} onClick={deleteHandler}>Delete item</Button>
+          <Button style={{borderRadius: 35, backgroundColor: "rgb(140, 33, 25)", padding: "18px 36px", fontSize: "18px", color: "white" }} variant="contained" onClick={() => setModal2(true)}>Filter by tag</Button>
         </div>
         <Modal isOpen={modal} onRequestClose={closeModal} style={customStyles} contentLabel='Something'>
 
-          <div className="modalInfo">
-            <div style={{color: "white"}}>PLEASE ENTER THE FOLLOWING INFORMATION</div>
-            
-            <form className="modalInfo" style={{margin: "20px"}} onSubmit={submitHandler}>
-              <label style={{margin: "10px", color: "white"}}>Item Name: <input type="text" name="name" value={name} onChange={(e) => {setName(e.target.value)}} /></label>
-              <label style={{margin: "10px", color: "white"}}>Price: <input type="number" name="price" onChange={(e) => {setPrice(e.target.value)}}/></label>
-              <label style={{margin: "10px", color: "white"}}>Description: <input type="text" name="Description" value={desc} onChange={(e) => {setDesc(e.target.value)}}/></label>
-              <label style={{margin: "10px", color: "white"}}>Quantity: <input type="number" name="Quantity"  onChange={(e) => {setQuantity(e.target.value)}}/></label>
-              <label style={{margin: "10px", color: "white"}}>Brand: <input type="text" name="Brand" value={brand} onChange={(e) => {setBrand(e.target.value)}}/></label>
-              <label style={{margin: "10px", color: "white"}}>Tags (Optional): <input type="text" name="Tags" value={tag} onChange={(e) => {setTag(e.target.value)}}/></label>
+       
+          <div style={{color: "white"}}>PLEASE ENTER THE FOLLOWING INFORMATION</div>
+          
+          <form className="modalInfo" style={{margin: "20px"}} onSubmit={submitHandler}>
+            <label style={{margin: "10px", color: "white"}}>Item Name: <input type="text" name="name" value={name} onChange={(e) => {setName(e.target.value)}} /></label>
+            <label style={{margin: "10px", color: "white"}}>Price: <input type="number" name="price" onChange={(e) => {setPrice(e.target.value)}}/></label>
+            <label style={{margin: "10px", color: "white"}}>Description: <input type="text" name="Description" value={desc} onChange={(e) => {setDesc(e.target.value)}}/></label>
+            <label style={{margin: "10px", color: "white"}}>Quantity: <input type="number" name="Quantity"  onChange={(e) => {setQuantity(e.target.value)}}/></label>
+            <label style={{margin: "10px", color: "white"}}>Brand: <input type="text" name="Brand" value={brand} onChange={(e) => {setBrand(e.target.value)}}/></label>
+            <label style={{margin: "10px", color: "white"}}>Tags (Optional): <input type="text" name="Tags" value={tag} onChange={(e) => {setTag(e.target.value)}}/></label>
 
-              <input style={{margin: "20px"}} type="submit" value="Submit"></input>
-              <button onClick={() => {closeModal()}}>Close</button>
-            </form>
-            </div>
+            <input style={{margin: "20px"}} type="submit" value="Submit"></input>
+            <Button style={{color: "white", backgroundColor: "rgb(140, 33, 25)"}} onClick={() => {closeModal()}}>Close</Button>
+          </form>
+
         </Modal>
         
         
         <Modal isOpen={modal2} onRequestClose={() => {setModal2(false)}} style={customStyles} contentLabel='Something'>
-          <div>PLEASE ENTER FILTERS, SEPERATED BY COMMAS (NO SPACES IN BETWEEN)</div>
 
-          <form>
-            <label style={{margin: "10px"}}>Filter:<input style={{margin: "20px"}} type="text" value={filter} onChange={(e) => {setFilter(e.target.value)}} ></input></label>
-          </form>
+          <div className="modalInfo">
+            <div style={{color: "white"}}>PLEASE ENTER TAG FILTERS, SEPERATED BY COMMAS</div>
 
-          <button onClick={filterHandler}>Submit</button>
+            <form>
+              <label style={{margin: "10px", color: "white"}}>Filter:<input style={{margin: "20px"}} type="text" value={filter} onChange={(e) => {setFilter(e.target.value)}} ></input></label>
+            </form>
+
+            <Button style={{color: "white", backgroundColor: "rgb(140, 33, 25)"}} onClick={filterHandler}>Submit</Button>
+          </div>
 
           <div className="holder">
           {filteredDisplay.map((ele, index) => {
             return <Card selected={() => setSelected(index)} info={ele} index={index} selector={selected==index}></Card>
           })}
           </div>
-          <button onClick={() => {setModal2(false)}}>Close</button>
+          <Button style={{color: "white", backgroundColor: "rgb(140, 33, 25)"}} onClick={() => {setModal2(false)}}>Close</Button>
         </Modal>
       </div>
     );
