@@ -1,19 +1,25 @@
 .sections {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   flex-direction: column;
   margin: 0.5rem;
   border-radius: 20px;
-  background: burlywood;
+  background: rgb(255, 255, 255);
+  width: 20rem;
+  height: 20rem;
+  font-size: 1rem;
 }
 
 .selected {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   flex-direction: column;
-  background: rgb(149, 107, 52);
+  background: rgba(250, 102, 92, 0.692);
   margin: 0.5rem;
   border-radius: 20px;
+  width: 20rem;
+  height: 20rem;
+  color: white;
 }

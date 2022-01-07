@@ -15,7 +15,6 @@ function Card(props) {
     // }, []);
   
     useEffect(() => {
-        console.log("HEREEEEE : ", props.selector)
         if(props.selector){
             setStyle("selected")
         }
@@ -25,14 +24,16 @@ function Card(props) {
     }, [props.selector]);
 
     return (
-        <div style={{padding: "10px"}} className={style} onClick={() => {props.selected(props.index)}}>
-            <p>{props.info._id}</p>
-            <p>{props.info.name}</p>
-            <p>{props.info.price}</p>
-            <p>{props.info.description}</p>
-            <p>{props.info.quantity}</p>
-            <p>{props.info.brand}</p>
-            <p>{props.info.tags}</p>
+        <div style={{padding: "2px"}} className={style} onClick={() => {props.selected(props.index)}}>
+            {/* <div style={{marginLeft: "10px"}}>{props.info._id}</div> */}
+            <div style={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "20px"}}>
+                <div><b>{props.info.name}</b></div>
+            </div>
+            <div style={{marginLeft: "10px"}}><b>PRICE:</b> {props.info.price}</div>
+            <div style={{marginLeft: "10px"}}><b>DESCRIPTION:</b> {props.info.description}</div>
+            <div style={{marginLeft: "10px"}}><b>QUANTITY:</b> {props.info.quantity}</div>
+            <div style={{marginLeft: "10px"}}><b>BRAND:</b> {props.info.brand}</div>
+            <div style={{marginLeft: "10px", marginBottom: "10px"}}><b>TAGS:</b> {props.info.tags.join(", ")}</div>
         </div>
     );
   }

@@ -2,10 +2,25 @@ const inventorySchema = require('../models/inventory.model');
 
 const router = require('express').Router();
 
+
+
 router.get('/', (req, res) => {
     inventorySchema.find().then((items) => {
       res.status(200).json(items ?? []);
     })
+});
+
+
+router.get('/filter/(:tags)*', (req, res) => {
+
+  const temp = req.params.tags.concat(req.params[0]).split("/")
+  inventorySchema.find({
+    tags: {
+      $all: temp
+    }
+  }).then(result => {
+    res.status(200).json(result ?? [])
+  })
 });
 
 router.post('/', (req, res) => {
@@ -40,5 +55,7 @@ router.delete('/:id', (req, res) => {
     }
   })
 });
+
+
 
 module.exports = router;
