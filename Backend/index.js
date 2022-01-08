@@ -37,7 +37,7 @@ const swaggerOptions = {
       },
     },
     host: ["localhost:5000"],
-    schemes: ["http"],
+    schemes: ["https"],
     definitions: {
       Inventory: {
         type: "object",
