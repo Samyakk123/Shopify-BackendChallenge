@@ -24,7 +24,10 @@ function Main() {
     const [brand, setBrand] = useState('')
     const [tag, setTag] = useState([]) 
 
-    const [filter, setFilter] = useState("")
+    const [priceFilter, setPriceFilter] = useState('')
+    const [priceFilter2, setPriceFilter2] = useState('')
+
+    const [filter, setFilter] = useState({name: "", price: 0, description: "", quantity: 0, brand: "", tags: ""})
 
     
 
@@ -112,8 +115,29 @@ function Main() {
     }
 
 
-    async function filterHandler(e) {
+    async function newFilterHandler(e){
 
+      const JSONToSend = filter
+      console.log("FILTER: ", filter)
+      
+      const additionalString = filter.tags.replaceAll(" ", "").split(",");
+      
+      console.log("OVER HERE: ", additionalString, additionalString.length)
+
+      var query='';
+      for (var i=0; i< additionalString.length; i++){
+        query += i==additionalString.length-1 ?  additionalString[i] : additionalString[i] + "&"
+      }
+      
+
+      JSONToSend['tags'] = query
+      const response = await axios.get("http://localhost:5000/api/inventory/filter/" + JSON.stringify(JSONToSend))
+      setFilteredDisplay(response.data)
+      e.preventDefault();
+    }
+
+
+    async function filterHandler(e) {
       const additionalString = filter.replaceAll(" ", "").split(",")
       var query='';
       for (var i=0; i < additionalString.length; i++){
@@ -150,6 +174,9 @@ function Main() {
             <label style={{margin: "10px", color: "white"}}>Item Name: <input type="text" name="name" value={name} onChange={(e) => {setName(e.target.value)}} /></label>
             <label style={{margin: "10px", color: "white"}}>Price: <input type="number" name="price" onChange={(e) => {setPrice(e.target.value)}}/></label>
             <label style={{margin: "10px", color: "white"}}>Description: <input type="text" name="Description" value={desc} onChange={(e) => {setDesc(e.target.value)}}/></label>
+      
+
+
             <label style={{margin: "10px", color: "white"}}>Quantity: <input type="number" name="Quantity"  onChange={(e) => {setQuantity(e.target.value)}}/></label>
             <label style={{margin: "10px", color: "white"}}>Brand: <input type="text" name="Brand" value={brand} onChange={(e) => {setBrand(e.target.value)}}/></label>
             <label style={{margin: "10px", color: "white"}}>Tags (Optional): <input type="text" name="Tags" value={tag} onChange={(e) => {setTag(e.target.value)}}/></label>
@@ -164,13 +191,38 @@ function Main() {
         <Modal isOpen={modal2} onRequestClose={() => {setModal2(false)}} style={customStyles} contentLabel='Something'>
 
           <div className="modalInfo">
-            <div style={{color: "white"}}>PLEASE ENTER TAG FILTERS, SEPERATED BY COMMAS</div>
+            <div style={{color: "white"}}>PLEASE ENTER FILTERS</div>
 
             <form>
-              <label style={{margin: "10px", color: "white"}}>Filter:<input style={{margin: "20px"}} type="text" value={filter} onChange={(e) => {setFilter(e.target.value)}} ></input></label>
+              <div style={{display: "flex", flexDirection: "column"}}>
+                <label style={{margin: "10px", color: "white"}}>Name:<input style={{margin: "10px"}} type="text" value={filter.name} onChange={(e) => {setFilter(  {...filter, name: e.target.value})}} ></input></label>
+                <div>
+                  <label style={{margin: "10px", color: "white"}}>Price: <input style={{margin: "10px"}} type="number" onChange={(e) => {setFilter({...filter, price: e.target.value})}}></input></label>
+                  <label>
+                    <select style={{backgroundColor: "black", height: "2rem", width: "5rem", color: "white"}} value={priceFilter} onChange={(e) => {setPriceFilter(e.target.value)}}>
+                      <option value="gt">{'greater than'}</option>
+                      <option value="lt"> {'less than'}</option>
+                      <option value="eq"> {'equal'}</option>
+                    </select>
+                  </label>
+                </div>
+                <label style={{margin: "10px", color: "white"}}>Description: <input style={{margin: "10px"}} type="text" value={filter.description} onChange={(e) => {setFilter({...filter, description: e.target.value})}}></input></label>
+                <div>
+                  <label style={{margin: "10px", color: "white"}}>Quantity:<input style={{margin: "10px"}} type="number" value={filter.quantity} onChange={(e) => {setFilter({...filter, quantity: e.target.value})}}></input></label>
+                  <label>
+                    <select style={{backgroundColor: "black", height: "2rem", width: "5rem", color: "white"}} value={priceFilter2} onChange={(e) => {setPriceFilter2(e.target.value)}}>
+                      <option value="gt">{'greater than'}</option>
+                      <option value="lt"> {'less than'}</option>
+                      <option value="eq"> {'equal'}</option>
+                    </select>
+                  </label>
+                </div>
+                <label style={{margin: "10px", color: "white"}}>Brand:<input style={{margin: "10px"}} type="text" value={filter.brand} onChange={(e) => {setFilter({...filter, brand: e.target.value})}}></input></label>
+                <label style={{margin: "10px", color: "white"}}>Tags: <input style={{margin: "10px"}} type="text" value={filter.tags}  onChange={(e) => {setFilter({...filter, tags: e.target.value});console.log(filter)}}></input></label>
+              </div>
             </form>
 
-            <Button style={{color: "white", backgroundColor: "rgb(140, 33, 25)"}} onClick={filterHandler}>Submit</Button>
+            <Button style={{color: "white", backgroundColor: "rgb(140, 33, 25)"}} onClick={newFilterHandler}>Submit</Button>
           </div>
 
           <div className="holder">
