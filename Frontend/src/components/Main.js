@@ -118,12 +118,8 @@ function Main() {
     async function newFilterHandler(e){
 
       const JSONToSend = filter
-      console.log("FILTER: ", filter)
-      
       const additionalString = filter.tags.replaceAll(" ", "").split(",");
-      
-      console.log("OVER HERE: ", additionalString, additionalString.length)
-
+    
       var query='';
       for (var i=0; i< additionalString.length; i++){
         query += i==additionalString.length-1 ?  additionalString[i] : additionalString[i] + "&"
@@ -218,7 +214,7 @@ function Main() {
                   </label>
                 </div>
                 <label style={{margin: "10px", color: "white"}}>Brand:<input style={{margin: "10px"}} type="text" value={filter.brand} onChange={(e) => {setFilter({...filter, brand: e.target.value})}}></input></label>
-                <label style={{margin: "10px", color: "white"}}>Tags: <input style={{margin: "10px"}} type="text" value={filter.tags}  onChange={(e) => {setFilter({...filter, tags: e.target.value});console.log(filter)}}></input></label>
+                <label style={{margin: "10px", color: "white"}}>Tags: <input style={{margin: "10px"}} type="text" value={filter.tags}  onChange={(e) => {setFilter({...filter, tags: e.target.value})}}></input></label>
               </div>
             </form>
 

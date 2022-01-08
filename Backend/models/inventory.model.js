@@ -44,6 +44,6 @@ const inventorySchema = new Schema({
   tags: {
     type: [String],
   },
-});
+}, {timestamps:true});
 
 module.exports = model('Inventory', inventorySchema);
