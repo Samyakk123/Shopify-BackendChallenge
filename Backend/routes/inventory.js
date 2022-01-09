@@ -45,48 +45,55 @@ router.get("/", (req, res) => {
 //     res.status(400).json(err)
 //   })
 // });
-
-// Working one above^
-
-router.get("/filter/:inventory", (req, res) => {
-  const temp = JSON.parse(req.params.inventory);
+router.get("/filter/:filter", (req, res) => {
+  const filter = JSON.parse(req.params.filter);
   let query = {
     $and: [],
   };
-  var subQuery = [];
-  if (temp.name !== "") query.$and.push({ name: { $all: temp.name } });
-  if (temp.price > "0") query.$and.push({ price: { $gt: temp.price } });
-  if (temp.description !== "")
-    query.$and.push({ description: { $all: temp.description } });
-  if (temp.quantity !== "0")
-    query.$and.push({ quantity: { $gt: temp.quantity } });
-  if (temp.brand !== "") query.$and.push({ brand: { $all: temp.brand } });
-  if (temp.tags !== "")
-    query.$and.push({ tags: { $all: temp.tags.split("&") } });
+
+  const properties = {
+    name: {
+      check: (name) => !!name,
+      subquery: (name) => ({ $regex: name, $options: "i" }),
+    },
+    price: {
+      check: (price) => +price > 0,
+      subquery: (price) => ({ $gt: price }),
+    },
+    description: {
+      check: (description) => !!description,
+      subquery: (description) => ({ $regex: description, $options: "i" }),
+    },
+    quantity: {
+      check: (quantity) => +quantity > 0,
+      subquery: (quantity) => ({ $gt: quantity }),
+    },
+    brand: {
+      check: (brand) => !!brand,
+      subquery: (brand) => ({ $regex: brand, $options: "i" }),
+    },
+    tags: {
+      check: (tags) => !!tags,
+      subquery: (tags) => ({ $all: tags.split("&") }),
+    },
+  };
+
+  Object.entries(properties).forEach(([key, { check, subquery }]) => {
+    if (filter[key] && check(filter[key])) {
+      query.$and.push({ [key]: subquery(filter[key]) });
+    }
+  });
+
   inventorySchema
-    .find(query)
+    .find(!query.$and.length ? undefined : query)
     .then((result) => {
       res.status(200).json(result ?? []);
     })
     .catch((err) => {
+      console.log(err);
       res.status(400).json(err);
     });
 });
-
-// router.get('/filter/:inventory', (req, res) => {
-//   const temp = JSON.parse(req.params.inventory)
-
-//   inventorySchema.find({
-//     name: {
-//       $in: {temp ? '' : [temp.filterProp]}
-//     }
-//   }).then(res => {
-//     res.status(200).json(res ?? [])
-//   }).catch(err => {
-//     res.status(400).json(err)
-//   })
-
-// })
 
 /**
  * Posts a new inventory item to the database
