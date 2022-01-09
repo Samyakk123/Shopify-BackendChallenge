@@ -357,145 +357,153 @@ function Main() {
         style={customStyles}
         contentLabel="Something"
       >
-        <div className="modalInfo">
-          <div style={{ color: "white", fontSize: "2rem" }}>
-            PLEASE ENTER FILTERS
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="modalInfo">
+            <div style={{ color: "white", fontSize: "2rem" }}>
+              PLEASE ENTER FILTERS
+            </div>
+
+            <form>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label style={{ margin: "10px", color: "white" }}>
+                  Name:
+                  <input
+                    style={{ margin: "10px" }}
+                    type="text"
+                    value={filter.name}
+                    onChange={(e) => {
+                      setFilter({ ...filter, name: e.target.value });
+                    }}
+                  ></input>
+                </label>
+                <div>
+                  <label style={{ margin: "10px", color: "white" }}>
+                    Price:{" "}
+                    <input
+                      style={{ margin: "10px" }}
+                      type="number"
+                      onChange={(e) => {
+                        setFilter({ ...filter, price: e.target.value });
+                      }}
+                    ></input>
+                  </label>
+                  <label>
+                    <select
+                      style={{
+                        backgroundColor: "black",
+                        height: "2rem",
+                        width: "5rem",
+                        color: "white",
+                      }}
+                      value={priceFilter}
+                      onChange={(e) => {
+                        setPriceFilter(e.target.value);
+                      }}
+                    >
+                      <option value="gt">{"greater than"}</option>
+                      <option value="lt"> {"less than"}</option>
+                      <option value="eq"> {"equal"}</option>
+                    </select>
+                  </label>
+                </div>
+                <label style={{ margin: "10px", color: "white" }}>
+                  Description:{" "}
+                  <input
+                    style={{ margin: "10px" }}
+                    type="text"
+                    value={filter.description}
+                    onChange={(e) => {
+                      setFilter({ ...filter, description: e.target.value });
+                    }}
+                  ></input>
+                </label>
+                <div>
+                  <label style={{ margin: "10px", color: "white" }}>
+                    Quantity:
+                    <input
+                      style={{ margin: "10px" }}
+                      type="number"
+                      value={filter.quantity}
+                      onChange={(e) => {
+                        setFilter({ ...filter, quantity: e.target.value });
+                      }}
+                    ></input>
+                  </label>
+                  <label>
+                    <select
+                      style={{
+                        backgroundColor: "black",
+                        height: "2rem",
+                        width: "5rem",
+                        color: "white",
+                      }}
+                      value={priceFilter2}
+                      onChange={(e) => {
+                        setPriceFilter2(e.target.value);
+                      }}
+                    >
+                      <option value="gt">{"greater than"}</option>
+                      <option value="lt"> {"less than"}</option>
+                      <option value="eq"> {"equal"}</option>
+                    </select>
+                  </label>
+                </div>
+                <label style={{ margin: "10px", color: "white" }}>
+                  Brand:
+                  <input
+                    style={{ margin: "10px" }}
+                    type="text"
+                    value={filter.brand}
+                    onChange={(e) => {
+                      setFilter({ ...filter, brand: e.target.value });
+                    }}
+                  ></input>
+                </label>
+                <label style={{ margin: "10px", color: "white" }}>
+                  Tags:{" "}
+                  <input
+                    style={{ margin: "10px" }}
+                    type="text"
+                    value={filter.tags}
+                    onChange={(e) => {
+                      setFilter({ ...filter, tags: e.target.value });
+                    }}
+                  ></input>
+                </label>
+              </div>
+            </form>
           </div>
 
-          <form>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <label style={{ margin: "10px", color: "white" }}>
-                Name:
-                <input
-                  style={{ margin: "10px" }}
-                  type="text"
-                  value={filter.name}
-                  onChange={(e) => {
-                    setFilter({ ...filter, name: e.target.value });
+          <div className="holder modalHolder">
+            {submitted ? (
+              filteredDisplay.length ? (
+                filteredDisplay.map((ele, index) => {
+                  return (
+                    <Card
+                      selected={() => setSelected(index)}
+                      info={ele}
+                      index={index}
+                      selector={selected == index}
+                    ></Card>
+                  );
+                })
+              ) : (
+                <div
+                  style={{
+                    color: "white",
+                    fontFamily: "font-family: Verdana, sans-serif",
+                    fontSize: "4rem",
                   }}
-                ></input>
-              </label>
-              <div>
-                <label style={{ margin: "10px", color: "white" }}>
-                  Price:{" "}
-                  <input
-                    style={{ margin: "10px" }}
-                    type="number"
-                    onChange={(e) => {
-                      setFilter({ ...filter, price: e.target.value });
-                    }}
-                  ></input>
-                </label>
-                <label>
-                  <select
-                    style={{
-                      backgroundColor: "black",
-                      height: "2rem",
-                      width: "5rem",
-                      color: "white",
-                    }}
-                    value={priceFilter}
-                    onChange={(e) => {
-                      setPriceFilter(e.target.value);
-                    }}
-                  >
-                    <option value="gt">{"greater than"}</option>
-                    <option value="lt"> {"less than"}</option>
-                    <option value="eq"> {"equal"}</option>
-                  </select>
-                </label>
-              </div>
-              <label style={{ margin: "10px", color: "white" }}>
-                Description:{" "}
-                <input
-                  style={{ margin: "10px" }}
-                  type="text"
-                  value={filter.description}
-                  onChange={(e) => {
-                    setFilter({ ...filter, description: e.target.value });
-                  }}
-                ></input>
-              </label>
-              <div>
-                <label style={{ margin: "10px", color: "white" }}>
-                  Quantity:
-                  <input
-                    style={{ margin: "10px" }}
-                    type="number"
-                    value={filter.quantity}
-                    onChange={(e) => {
-                      setFilter({ ...filter, quantity: e.target.value });
-                    }}
-                  ></input>
-                </label>
-                <label>
-                  <select
-                    style={{
-                      backgroundColor: "black",
-                      height: "2rem",
-                      width: "5rem",
-                      color: "white",
-                    }}
-                    value={priceFilter2}
-                    onChange={(e) => {
-                      setPriceFilter2(e.target.value);
-                    }}
-                  >
-                    <option value="gt">{"greater than"}</option>
-                    <option value="lt"> {"less than"}</option>
-                    <option value="eq"> {"equal"}</option>
-                  </select>
-                </label>
-              </div>
-              <label style={{ margin: "10px", color: "white" }}>
-                Brand:
-                <input
-                  style={{ margin: "10px" }}
-                  type="text"
-                  value={filter.brand}
-                  onChange={(e) => {
-                    setFilter({ ...filter, brand: e.target.value });
-                  }}
-                ></input>
-              </label>
-              <label style={{ margin: "10px", color: "white" }}>
-                Tags:{" "}
-                <input
-                  style={{ margin: "10px" }}
-                  type="text"
-                  value={filter.tags}
-                  onChange={(e) => {
-                    setFilter({ ...filter, tags: e.target.value });
-                  }}
-                ></input>
-              </label>
-            </div>
-          </form>
-
-          <Button
-            style={{ color: "white", backgroundColor: "rgb(140, 33, 25)" }}
-            onClick={(e) => {
-              newFilterHandler(e);
-              setSubmitted(true);
-            }}
-          >
-            Submit
-          </Button>
-        </div>
-
-        <div className="holder modalHolder">
-          {submitted ? (
-            filteredDisplay.length ? (
-              filteredDisplay.map((ele, index) => {
-                return (
-                  <Card
-                    selected={() => setSelected(index)}
-                    info={ele}
-                    index={index}
-                    selector={selected == index}
-                  ></Card>
-                );
-              })
+                >
+                  No Results.
+                </div>
+              )
             ) : (
               <div
                 style={{
@@ -504,29 +512,37 @@ function Main() {
                   fontSize: "4rem",
                 }}
               >
-                No Results.
+                FILTER RESULTS WILL SHOW UP HERE
               </div>
-            )
-          ) : (
-            <div
-              style={{
-                color: "white",
-                fontFamily: "font-family: Verdana, sans-serif",
-                fontSize: "4rem",
-              }}
-            >
-              FILTER RESULTS WILL SHOW UP HERE
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <Button
-          style={{ color: "white", backgroundColor: "rgb(140, 33, 25)" }}
+          style={{
+            color: "white",
+            backgroundColor: "rgb(140, 33, 25)",
+            borderRadius: "2rem",
+            marginRight: "10px",
+          }}
           onClick={() => {
             setModal2(false);
             setSubmitted(false);
           }}
         >
           Close
+        </Button>
+        <Button
+          style={{
+            color: "white",
+            backgroundColor: "rgb(140, 33, 25)",
+            borderRadius: "2rem",
+          }}
+          onClick={(e) => {
+            newFilterHandler(e);
+            setSubmitted(true);
+          }}
+        >
+          Submit
         </Button>
       </Modal>
     </div>

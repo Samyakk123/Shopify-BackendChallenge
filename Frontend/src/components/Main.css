@@ -16,8 +16,8 @@
 
 .modalHolder {
   overflow-y: scroll;
-  width: 75vw;
-  height: 50vh;
+  width: 75%;
+  height: 60vh;
 }
 
 .modalInfo {
