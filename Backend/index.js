@@ -36,8 +36,6 @@ const swaggerOptions = {
         name: "Samyak Mehta",
       },
     },
-    host: ["shopifybackendchallenge.herokuapp.com"],
-    schemes: ["https"],
     definitions: {
       Inventory: {
         type: "object",
