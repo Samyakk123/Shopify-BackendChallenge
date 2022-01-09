@@ -22,9 +22,9 @@ function Main() {
   const [brand, setBrand] = useState("");
   const [tag, setTag] = useState([]);
 
-  const [priceFilter, setPriceFilter] = useState("");
-  const [priceFilter2, setPriceFilter2] = useState("");
-
+  const [priceFilter, setPriceFilter] = useState("gt");
+  const [priceFilter2, setPriceFilter2] = useState("gt");
+  const [submitted, setSubmitted] = useState(false);
   const [filter, setFilter] = useState({
     name: "",
     price: 0,
@@ -102,6 +102,7 @@ function Main() {
   }
 
   useEffect(async () => {
+    console.log("WHAT THE FUCK");
     await axios.get("/api/inventory/").then((res) => {
       setDisplay(res.data);
     });
@@ -117,6 +118,8 @@ function Main() {
 
   async function newFilterHandler(e) {
     const JSONToSend = filter;
+    JSONToSend["comparison1"] = "$" + JSONToSend["comparison1"];
+    JSONToSend["comparison2"] = "$" + JSONToSend["comparison2"];
     const additionalString = filter.tags.replaceAll(" ", "").split(",");
 
     var query = "";
@@ -128,23 +131,17 @@ function Main() {
     }
 
     JSONToSend["tags"] = query;
+
+    JSONToSend["comparison1"] = priceFilter;
+    JSONToSend["comparison2"] = priceFilter2;
+
+    console.log("OVER HERE: ", JSON.stringify(JSONToSend));
     const response = await axios.get(
       "/api/inventory/filter/" + JSON.stringify(JSONToSend)
     );
-    setFilteredDisplay(response.data);
-    e.preventDefault();
-  }
 
-  async function filterHandler(e) {
-    const additionalString = filter.replaceAll(" ", "").split(",");
-    var query = "";
-    for (var i = 0; i < additionalString.length; i++) {
-      query =
-        i == additionalString.length - 1
-          ? query + additionalString[i]
-          : query + additionalString[i] + "&";
-    }
-    const response = await axios.get("/api/inventory/filter/" + query);
+    console.log("OVERREEEE HEREEREREREE: ", response.data);
+
     setFilteredDisplay(response.data);
     e.preventDefault();
   }
@@ -352,7 +349,9 @@ function Main() {
         contentLabel="Something"
       >
         <div className="modalInfo">
-          <div style={{ color: "white" }}>PLEASE ENTER FILTERS</div>
+          <div style={{ color: "white", fontSize: "2rem" }}>
+            PLEASE ENTER FILTERS
+          </div>
 
           <form>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -466,28 +465,44 @@ function Main() {
 
           <Button
             style={{ color: "white", backgroundColor: "rgb(140, 33, 25)" }}
-            onClick={newFilterHandler}
+            onClick={(e) => {
+              newFilterHandler(e);
+              setSubmitted(true);
+            }}
           >
             Submit
           </Button>
         </div>
 
-        <div className="holder">
-          {filteredDisplay.map((ele, index) => {
-            return (
-              <Card
-                selected={() => setSelected(index)}
-                info={ele}
-                index={index}
-                selector={selected == index}
-              ></Card>
-            );
-          })}
+        <div className="holder modalHolder">
+          {submitted ? (
+            filteredDisplay.map((ele, index) => {
+              return (
+                <Card
+                  selected={() => setSelected(index)}
+                  info={ele}
+                  index={index}
+                  selector={selected == index}
+                ></Card>
+              );
+            })
+          ) : (
+            <div
+              style={{
+                color: "white",
+                fontFamily: "font-family: Verdana, sans-serif",
+                fontSize: "4rem",
+              }}
+            >
+              FILTER RESULTS WILL SHOW UP HERE
+            </div>
+          )}
         </div>
         <Button
           style={{ color: "white", backgroundColor: "rgb(140, 33, 25)" }}
           onClick={() => {
             setModal2(false);
+            setSubmitted(false);
           }}
         >
           Close

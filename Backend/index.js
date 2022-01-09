@@ -31,19 +31,23 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: "API - Inventory Manager",
-      description: "Inventory Manager Information",
+      description:
+        "Backend API for the inventory storage located at: https://shopifybackendchallenge.herokuapp.com/",
       contact: {
         name: "Samyak Mehta",
       },
     },
+    tags: -"Authentication",
     definitions: {
       Inventory: {
         type: "object",
         properties: {
           name: {
+            required: true,
             type: "string",
           },
           price: {
+            default: 0,
             type: "integer",
             format: "int64",
           },
@@ -51,11 +55,18 @@ const swaggerOptions = {
             type: "string",
           },
           quantity: {
+            default: 1,
             type: "integer",
             format: "int64",
           },
           brand: {
             type: "string",
+          },
+          tags: {
+            type: "array",
+            items: {
+              type: "string",
+            },
           },
         },
       },
@@ -68,8 +79,8 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.static(__dirname + "/public"));
+//app.use(express.static(path.join(__dirname, "..", "Frontend", "build")));
 app.use(express.static(path.join(__dirname, "..", "Frontend", "build")));
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "Frontend", "build", "index.html"));
 });

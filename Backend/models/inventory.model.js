@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 /**
@@ -11,39 +11,42 @@ const { Schema, model } = mongoose;
  * @property {Number}       quantity        number of items in storage
  * @property {String}       brand           item brand
  * @property {[String]}     tags            item Tags
- * 
+ *
  * The _id is the primary key for this collection
  */
 
-const inventorySchema = new Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: 'Name must not be empty!',
+const inventorySchema = new Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: "Name must not be empty!",
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: [0, "Price cannot be less then 0!"],
+    },
+    description: {
+      type: String,
+      trim: true,
+      required: true,
+      maxlength: 120,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: [1, "item quantity must be greater than 0! "],
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
+    tags: {
+      type: [String],
+    },
   },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, 'Price cannot be less then 0!'],
-  },
-  description: {
-    type: String,
-    trim: true,
-    required: true,
-    maxlength: 120,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    min: [1, 'item quantity must be greater than 0! '],
-  },
-  brand: {
-    type: String,
-    required: true,
-  },
-  tags: {
-    type: [String],
-  },
-}, {timestamps:true});
+  { timestamps: true }
+);
 
-module.exports = model('Inventory', inventorySchema);
+module.exports = model("Inventory", inventorySchema);
