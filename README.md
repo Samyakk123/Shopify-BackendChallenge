@@ -4,7 +4,6 @@
 
 <img src="https://github.com/Samyakk123/Goblin-fighters/blob/main/temp2.gif" width="1000" height="500" />
 
-
 # 🔗 Public Links
 
 - Public Link: https://shopifybackendchallenge.herokuapp.com/
