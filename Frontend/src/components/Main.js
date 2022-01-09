@@ -20,7 +20,7 @@ function Main() {
   const [desc, setDesc] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [brand, setBrand] = useState("");
-  const [tag, setTag] = useState([]);
+  const [tag, setTag] = useState("");
 
   const [priceFilter, setPriceFilter] = useState("gt");
   const [priceFilter2, setPriceFilter2] = useState("gt");
@@ -73,44 +73,57 @@ function Main() {
   }
 
   async function submitHandler(e) {
+    e.preventDefault();
     if (edit == false) {
-      var response = await axios.post("/api/inventory/", {
-        name: name,
-        price: price,
-        description: desc,
-        quantity: quantity,
-        brand: brand,
-        tags: tag.replaceAll(" ", "").split(","),
-      });
-    } else {
-      var response = await axios.put(
-        "/api/inventory/" + display[selected]._id,
-        {
+      var response = await axios
+        .post("/api/inventory/", {
           name: name,
           price: price,
           description: desc,
           quantity: quantity,
           brand: brand,
           tags: tag.replaceAll(" ", "").split(","),
-        }
-      );
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    } else {
+      var response = await axios
+        .put("/api/inventory/" + display[selected]._id, {
+          name: name,
+          price: price,
+          description: desc,
+          quantity: quantity,
+          brand: brand,
+          tags: tag.replaceAll(" ", "").split(","),
+        })
+        .catch((e) => {
+          alert(e);
+        });
     }
     setModified(!modified);
-    e.preventDefault();
 
     // e.preventDefault();
   }
 
   useEffect(async () => {
-    console.log("WHAT THE FUCK");
-    await axios.get("/api/inventory/").then((res) => {
-      setDisplay(res.data);
-    });
+    await axios
+      .get("/api/inventory/")
+      .then((res) => {
+        setDisplay(res.data);
+      })
+      .catch((e) => {
+        alert(e);
+      });
   }, [modified]);
 
   async function deleteHandler() {
     if (selected != -1) {
-      await axios.delete("/api/inventory/" + display[selected]._id);
+      await axios
+        .delete("/api/inventory/" + display[selected]._id)
+        .catch((e) => {
+          alert(e);
+        });
       display.splice(selected, 1);
       setModified(!modified);
     }
@@ -135,13 +148,9 @@ function Main() {
     JSONToSend["comparison1"] = priceFilter;
     JSONToSend["comparison2"] = priceFilter2;
 
-    console.log("OVER HERE: ", JSON.stringify(JSONToSend));
     const response = await axios.get(
       "/api/inventory/filter/" + JSON.stringify(JSONToSend)
     );
-
-    console.log("OVERREEEE HEREEREREREE: ", response.data);
-
     setFilteredDisplay(response.data);
     e.preventDefault();
   }
@@ -476,16 +485,28 @@ function Main() {
 
         <div className="holder modalHolder">
           {submitted ? (
-            filteredDisplay.map((ele, index) => {
-              return (
-                <Card
-                  selected={() => setSelected(index)}
-                  info={ele}
-                  index={index}
-                  selector={selected == index}
-                ></Card>
-              );
-            })
+            filteredDisplay.length ? (
+              filteredDisplay.map((ele, index) => {
+                return (
+                  <Card
+                    selected={() => setSelected(index)}
+                    info={ele}
+                    index={index}
+                    selector={selected == index}
+                  ></Card>
+                );
+              })
+            ) : (
+              <div
+                style={{
+                  color: "white",
+                  fontFamily: "font-family: Verdana, sans-serif",
+                  fontSize: "4rem",
+                }}
+              >
+                No Results.
+              </div>
+            )
           ) : (
             <div
               style={{

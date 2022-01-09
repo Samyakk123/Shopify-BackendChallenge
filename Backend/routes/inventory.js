@@ -75,7 +75,7 @@ router.get("/filter/:filter", (req, res) => {
       subquery: (name) => ({ $regex: name, $options: "i" }),
     },
     price: {
-      check: (price) => +price > 0,
+      check: (_) => true,
       subquery: (price) => ({ [filter["comparison1"]]: price }),
     },
     description: {
@@ -83,7 +83,7 @@ router.get("/filter/:filter", (req, res) => {
       subquery: (description) => ({ $regex: description, $options: "i" }),
     },
     quantity: {
-      check: (quantity) => +quantity > 0,
+      check: (_) => true,
       subquery: (quantity) => ({ [filter["comparison2"]]: quantity }),
     },
     brand: {
@@ -102,14 +102,12 @@ router.get("/filter/:filter", (req, res) => {
     }
   });
 
-  console.log("here: ", query.$and);
   inventorySchema
     .find(!query.$and.length ? undefined : query)
     .then((result) => {
       res.status(200).json(result ?? []);
     })
     .catch((err) => {
-      console.log(err);
       res.status(400).json(err);
     });
 });
