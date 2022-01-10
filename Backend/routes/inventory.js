@@ -46,11 +46,11 @@ router.get("/", (req, res) => {
  *    - in: "path"
  *      name: "filter"
  *      required: false
- *      default: {"name":"Something","price":0,"description":"","quantity":0,"brand":"","tags":"clothing"}
+ *      default: {"name":"Something","price":0,"description":"","quantity":0,"brand":"","tags":"clothing", "comparison1": "gt", "comparison2": "gt"}
  *      type: string
  *      description: ""
  *      schema:
- *        $ref: "#/definitions/Inventory"
+ *        $ref: "#/definitions/InventoryFilter"
  *    responses:
  *      '200':
  *        description: Items were successfully filtered and fetched

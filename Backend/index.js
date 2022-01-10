@@ -70,6 +70,44 @@ const swaggerOptions = {
           },
         },
       },
+
+      InventoryFilter: {
+        type: "object",
+        properties: {
+          name: {
+            required: true,
+            type: "string",
+          },
+          price: {
+            default: 0,
+            type: "integer",
+            format: "int64",
+          },
+          description: {
+            type: "string",
+          },
+          quantity: {
+            default: 1,
+            type: "integer",
+            format: "int64",
+          },
+          brand: {
+            type: "string",
+          },
+          tags: {
+            type: "array",
+            items: {
+              type: "string",
+            },
+          },
+          comparison1: {
+            type: "string",
+          },
+          comparison2: {
+            type: "string",
+          },
+        },
+      },
     },
   },
   apis: ["./routes/inventory.js"],

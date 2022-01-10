@@ -24,11 +24,8 @@ function Card(props) {
       {/* <div style={{marginLeft: "10px"}}>{props.info._id}</div> */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
           width: "100%",
+          textAlign: "center",
         }}
       >
         <div
@@ -55,7 +52,7 @@ function Card(props) {
       <div style={{ marginLeft: "10px" }}>
         <b>PRICE:</b> {props.info.price}
       </div>
-      <div style={{ marginLeft: "10px", alignItems: "flex-start" }}>
+      <div style={{ marginLeft: "10px", textAlign: "left" }}>
         <b>DESCRIPTION:</b> {props.info.description}
       </div>
       <div style={{ marginLeft: "10px" }}>
