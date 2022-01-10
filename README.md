@@ -35,6 +35,7 @@
 DATABASE_URI=<MONGODB DATABASE CONNECTION LINK HERE>
 ```
 
+Save this file inside the project folder under the /Backend folder (explained where below)
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 # 💾 Local Development
@@ -56,11 +57,13 @@ As an alternative to the public links provided **above**. I will list the steps 
 🔎 From there run the following commands:
 
 ```diff
-👉 cd Frontend && npm run build
-
+👉 cd Frontend
+👉 npm install && npm run build
 # <...Boring production build here...>
 
-👉 cd ../backend && npm run start:dev
+👉 cd ../Backend
+# ❗ <Make sure the .env file is located here in the Backend folder from the requirements above> ❗
+👉 npm install && npm run start:dev
 ```
 
 <p align="center">Viola! That's all you need! Now you can simply go to <a href="http://localhost:5000/">http://localhost:5000/</a> and begin interacting with the project! You can also view the API documentation found at: <a href="http://localhost:5000/api-docs">API Docs</a> (make sure running locally) </p>
