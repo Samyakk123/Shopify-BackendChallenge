@@ -86,6 +86,7 @@ function Main() {
         })
         .catch((e) => {
           alert(e);
+          return;
         });
     } else {
       var response = await axios
@@ -99,6 +100,7 @@ function Main() {
         })
         .catch((e) => {
           alert(e);
+          return;
         });
     }
     setModified(!modified);
@@ -177,10 +179,7 @@ function Main() {
           width: "70%",
         }}
       >
-        <a
-          href="https://shopifybackendchallenge.herokuapp.com/api-docs/"
-          alt=""
-        >
+        <a target="" href="/api-docs/" alt="">
           <Button
             style={{
               borderRadius: 35,
@@ -193,7 +192,11 @@ function Main() {
             Swagger (API Documentation)
           </Button>
         </a>
-        <a href="https://github.com/Samyakk123/Shopify-SummerChallenge" alt="">
+        <a
+          target=""
+          href="https://github.com/Samyakk123/Shopify-SummerChallenge"
+          alt=""
+        >
           <Button
             style={{
               borderRadius: 35,
