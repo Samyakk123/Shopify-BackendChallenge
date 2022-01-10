@@ -51,6 +51,8 @@ As an alternative to the public links provided **above**. I will list the steps 
 # Shopify-SummerChallenge
 
 👉 cd Shopify-SummerChallenge
+
+<Make sure the .env file is located here from the requirements above>
 ```
 
 🔎 From there run the following commands:
