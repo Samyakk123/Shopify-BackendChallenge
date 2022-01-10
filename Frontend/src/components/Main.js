@@ -294,7 +294,7 @@ function Main() {
           variant="contained"
           onClick={() => setModal2(true)}
         >
-          Filter by tag
+          Filter
         </Button>
       </div>
       <Modal
