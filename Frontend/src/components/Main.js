@@ -122,6 +122,7 @@ function Main() {
       await axios
         .delete("/api/inventory/" + display[selected]._id)
         .catch((e) => {
+          console.log("What is this stupid error?: " + e);
           alert(e);
         });
       display.splice(selected, 1);
@@ -160,11 +161,51 @@ function Main() {
       <div
         style={{
           color: "white",
-          fontSize: "5rem",
+          fontSize: "4rem",
           fontFamily: "font-family: Verdana, sans-serif",
         }}
       >
         INVENTORY MANAGEMENT SYSTEM
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          marginRight: "1rem",
+          width: "70%",
+        }}
+      >
+        <a
+          href="https://shopifybackendchallenge.herokuapp.com/api-docs/"
+          alt=""
+        >
+          <Button
+            style={{
+              borderRadius: 35,
+              backgroundColor: "rgb(140, 33, 25)",
+              padding: "18px 36px",
+              fontSize: "18px",
+              color: "white",
+            }}
+          >
+            Swagger (API Documentation)
+          </Button>
+        </a>
+        <a href="https://github.com/Samyakk123/Shopify-SummerChallenge" alt="">
+          <Button
+            style={{
+              borderRadius: 35,
+              backgroundColor: "rgb(140, 33, 25)",
+              padding: "18px 36px",
+              fontSize: "18px",
+              color: "white",
+            }}
+          >
+            GitHub repository
+          </Button>
+        </a>
       </div>
       <div className="holder">
         {display.map((ele, index) => {
@@ -187,6 +228,7 @@ function Main() {
           flexDirection: "row",
           alignItems: "center",
           paddingTop: "20px",
+          marginBottom: "20px",
         }}
       >
         <Button
@@ -489,7 +531,7 @@ function Main() {
                       selected={() => setSelected(index)}
                       info={ele}
                       index={index}
-                      selector={selected == index}
+                      selector={selected == -5}
                     ></Card>
                   );
                 })
@@ -509,10 +551,11 @@ function Main() {
                 style={{
                   color: "white",
                   fontFamily: "font-family: Verdana, sans-serif",
-                  fontSize: "4rem",
+                  fontSize: "3rem",
+                  marginRight: "20px",
                 }}
               >
-                FILTER RESULTS WILL SHOW UP HERE
+                FILTER RESULTS WILL BE HERE
               </div>
             )}
           </div>

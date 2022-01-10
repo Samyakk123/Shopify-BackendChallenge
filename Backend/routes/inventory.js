@@ -173,7 +173,7 @@ router.post("/", (req, res) => {
  * /api/inventory/{id}:
  *  put:
  *    tags: ['Inventory']
- *    description: Given a **JSON formatted** String `filter` will provide all inventory items matching the properties provided
+ *    description: Updates the JSON value for the item
  *    summary: Something
  *    produces:
  *      "application.json"
@@ -241,15 +241,13 @@ router.put("/:id", (req, res) => {
  *
  */
 router.delete("/:id", (req, res) => {
-  inventorySchema
-    .findByIdAndRemove(req.params.id, function (err) {
-      if (!err) {
-        res.status(200).json("deleted");
-      } else {
-        return res.status(400).json(err);
-      }
-    })
-    .catch((err) => res.status(400).json(err));
+  inventorySchema.findByIdAndRemove(req.params.id, function (err) {
+    if (!err) {
+      res.status(200).json("deleted");
+    } else {
+      res.status(400).send();
+    }
+  });
 });
 
 module.exports = router;
