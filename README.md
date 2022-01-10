@@ -9,6 +9,20 @@
 - Public Link: https://shopifybackendchallenge.herokuapp.com/
 - Swagger link (REST API Documentation): https://shopifybackendchallenge.herokuapp.com/api-docs/
 
+# ✍️ Functionalities 
+This backend API follows the CRUD functionalities i.e.
+- **C**reating new inventory items
+- **R**eading all / filtered inventory items
+- **U**pdating an inventory item with new values
+- **D** deleting an inventory item from the database
+
+The **additional feature** I decided to implement was filtering items based on properties. In the online link above (or if you're running it locally) you can click the filter button and based on any / all of the properties provided query information. For example, you could search for all items with name containing the word "some", with a price greater than 200, and quantity less then 4 containing the tag "a" in which case you will see the picture on the left. 
+
+Furthermore all of the functionalities in my program are error-checked both in Frontend and Backend! In the program above (or through Swagger/Postman) try if an invalid value going against the schema restraints (such as quantity < 0), the program will not execute and will return back an error message as you can see in the picture on the right.
+<p align="center"><img src="https://user-images.githubusercontent.com/54184722/148835708-96838ec9-532c-4e39-b61b-dcc13d039c28.png" width="400" height="400" />
+<img src="https://user-images.githubusercontent.com/54184722/148840804-d8e7031e-a988-43da-80d2-87a19f17f32a.png" width="400" height="400" /></p>
+
+
 # 💻 Technologies used
 
 - MERN Stack (MongoDb, Express.js, React, Node.js)
@@ -16,6 +30,7 @@
 - JavaScript
 - Swagger (API Documentation)
 - Heroku
+
 
 # 💡 Implementation Details
 
