@@ -43,6 +43,10 @@ function Main() {
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
       backgroundColor: "black",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "column",
     },
   };
 
@@ -74,6 +78,7 @@ function Main() {
 
   async function submitHandler(e) {
     e.preventDefault();
+    console.log("I am tag: " + tag);
     if (edit == false) {
       var response = await axios
         .post("/api/inventory/", {
@@ -82,11 +87,19 @@ function Main() {
           description: desc,
           quantity: quantity,
           brand: brand,
-          tags: tag.replaceAll(" ", "").split(","),
+          tags: tag.length ? tag.replaceAll(" ", "").split(",") : "",
+        })
+        .then((response) => {
+          if (response.status == 200) {
+            alert("Successfully updated element.");
+          }
         })
         .catch((e) => {
-          alert(e);
-          return;
+          if (e.response.status == 400) {
+            alert(
+              "ERROR 400. Entered an invalid/Missing value. All fields except Tag must be populated. Remember Quantity > 0 and Price >= 0."
+            );
+          }
         });
     } else {
       var response = await axios
@@ -98,12 +111,19 @@ function Main() {
           brand: brand,
           tags: tag.replaceAll(" ", "").split(","),
         })
+        .then((response) => {
+          if (response.status == 200) {
+            alert("Successfully updated element.");
+          }
+        })
         .catch((e) => {
-          alert(e);
-          return;
+          if (e.response.status == 400) {
+            alert(
+              "ERROR 400. Entered an invalid value. Remember Quantity > 0 and Price >= 0."
+            );
+          }
         });
     }
-    setModified(!modified);
 
     // e.preventDefault();
   }
@@ -306,7 +326,9 @@ function Main() {
         <div style={{ color: "white" }}>
           PLEASE ENTER THE FOLLOWING INFORMATION
         </div>
-
+        <div style={{ color: "rgb(200, 60, 60)", fontSize: "15px" }}>
+          Only place the fields you want to update
+        </div>
         <form
           className="modalInfo"
           style={{ margin: "20px" }}
@@ -413,7 +435,6 @@ function Main() {
             <div style={{ color: "white", fontSize: "2rem" }}>
               PLEASE ENTER FILTERS
             </div>
-
             <form>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <label style={{ margin: "10px", color: "white" }}>
@@ -568,7 +589,8 @@ function Main() {
             color: "white",
             backgroundColor: "rgb(140, 33, 25)",
             borderRadius: "2rem",
-            marginRight: "10px",
+            marginBottom: "10px",
+            // marginRight: "10px",
           }}
           onClick={() => {
             setModal2(false);
