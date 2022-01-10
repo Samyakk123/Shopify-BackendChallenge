@@ -60,7 +60,7 @@ As an alternative to the public links provided **above**. I will list the steps 
 👉 npm install && npm run build
 # <...Boring production build here...>
 
-👉 cd ../backend
+👉 cd ../Backend
 👉 npm install && npm run start:dev
 ```
 
