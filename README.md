@@ -35,6 +35,7 @@
 DATABASE_URI=<MONGODB DATABASE CONNECTION LINK HERE>
 ```
 
+Save this file inside the project folder under the /Backend folder (explained where below)
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 # 💾 Local Development
@@ -51,8 +52,6 @@ As an alternative to the public links provided **above**. I will list the steps 
 # Shopify-SummerChallenge
 
 👉 cd Shopify-SummerChallenge
-
-# ❗ <Make sure the .env file is located here from the requirements above> ❗
 ```
 
 🔎 From there run the following commands:
@@ -63,6 +62,7 @@ As an alternative to the public links provided **above**. I will list the steps 
 # <...Boring production build here...>
 
 👉 cd ../Backend
+# ❗ <Make sure the .env file is located here in the Backend folder from the requirements above> ❗
 👉 npm install && npm run start:dev
 ```
 
