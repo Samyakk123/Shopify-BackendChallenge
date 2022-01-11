@@ -91,7 +91,7 @@ function Main() {
         })
         .then((response) => {
           if (response.status == 200) {
-            alert("Successfully updated element.");
+            alert("Successfully added new inventory item.");
           }
         })
         .catch((e) => {
@@ -113,7 +113,7 @@ function Main() {
         })
         .then((response) => {
           if (response.status == 200) {
-            alert("Successfully updated element.");
+            alert("Successfully updated inventory item.");
           }
         })
         .catch((e) => {
@@ -125,6 +125,7 @@ function Main() {
         });
     }
 
+    setModified(!modified);
     // e.preventDefault();
   }
 
